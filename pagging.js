@@ -214,6 +214,7 @@ function searchInDB(itemSearch, start, end) {
             if (datap.d != null) {              
                 items = datap.d.items;
                 totalRecord = datap.d.totalRecords;   
+                //tempTotalRecord = totalRecord; assign before search on all records search
                 if (totalRecord > recordPerPage) {
                   if (end < totalRecord) {
                     $('#btnNext').show();
