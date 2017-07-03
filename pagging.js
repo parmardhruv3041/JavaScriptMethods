@@ -1,14 +1,16 @@
-var itemSearch = '0';
+var itemSearch = '0'; //use to search in DB
 //Pagging Configuration
-var totalRecord = 0;
+var totalRecord = 0; //total records for pagging
 var page = 1;
-var recordPerPage = 100;
+var recordPerPage = 100; // use to allow only 100 recourds to be load
 var start = 1;
 var end = recordPerPage;
-var tempTotalRecord = null;
+var tempTotalRecord = null; // use to store temp. total recourd value when user search item in DB. 
 
 $(document).ready(function () {
   
+  //search box in html
+  //<input type="Search" id="searchBoxID" placeholder="Search code or item name"/>
   $('#searchBoxID').on('input', function (e) {
         if ('' == this.value) {
             itemSearch = '0';
@@ -20,7 +22,8 @@ $(document).ready(function () {
             $('#gotoPage').val(page);            
         }
     });
-  
+  //search button click
+  //<input type="Button" id="btnSearch" class="button" value="Search"/>
   $("#btnSearch").click(function () {
       
         $('#btnNext').hide();
@@ -37,6 +40,11 @@ $(document).ready(function () {
         $('#gotoPage').val(page);        
     });
   
+    //navigation button
+    // <input type="button" id="btnPreviousFirst" value="<<" />                                  
+    // <input type="button" id="btnPrevious" value="<" />
+    // <input type="button" id="btnNext" value=">" />
+    // <input type="button" id="btnNextLast" value=">>" />                                    
     $("#btnPrevious").click(function () {
         pagging("prev");
         $('#gotoPage').val(page);
@@ -56,9 +64,10 @@ $(document).ready(function () {
         pagging("nextAll");
         $('#gotoPage').val(page);
     });
-
+    
+    // use to navigate on page
+    //<p id="pageNo">Page Number<input type="text" style="padding: 0;text-align: center;" id="gotoPage" value="1" onkeypress="return isNumberKey(event)"/></p>
     $('#gotoPage').val(page);
-
     $('#gotoPage').keyup(function () {
         if (event.keyCode == 13) {
             if ($(this).val() == '0') {
@@ -69,7 +78,7 @@ $(document).ready(function () {
     });  
 });
 
-
+//only allow number 
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -77,6 +86,7 @@ function isNumberKey(evt) {
     return true;
 }
 
+//navigates on page 
 function goToPage(pageNo) {
     var totalPages = Math.ceil(totalRecord / recordPerPage);   
 
@@ -101,14 +111,14 @@ function goToPage(pageNo) {
     }   
 }
 
+//call when user click on navigation symboll like next,nextall,previous,etc
 function pagging(action) {   
     if (action == "next") {                       
             $('#btnPrevious').show();
             $('#btnPreviousFirst').show();
             page++;
-            var totalPages = Math.ceil(totalRecord / recordPerPage);
-
-           // $("#pageContains").html("Page " + page + " of " + totalPages);
+            var totalPages = Math.ceil(totalRecord / recordPerPage); // count total page based on recourds
+        
             start = end + 1;
             end = end + recordPerPage;        
 
